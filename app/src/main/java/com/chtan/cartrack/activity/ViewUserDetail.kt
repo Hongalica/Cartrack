@@ -1,6 +1,8 @@
 package com.chtan.cartrack.activity
 
 import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.FragmentActivity
@@ -27,7 +29,13 @@ class ViewUserDetail: FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_user_detail)
-        queryMasterDetail()
+        if (isNetworkAvailable(this)==true) {
+            queryMasterDetail()
+        }
+        else
+        {
+
+        }
     }
 
     fun queryMasterDetail() {
@@ -69,6 +77,11 @@ class ViewUserDetail: FragmentActivity() {
         transaction.replace(R.id.fragment_holder, fragment, "theMasterDetail")
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected
     }
 }
 
