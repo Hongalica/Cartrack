@@ -32,7 +32,7 @@ class NameList : Fragment() {
             user_name_list.add(userDetail.name.toString())
         }
 
-        val adapter = ArrayAdapter(view.context, R.layout.listview_item, user_name_list)
+        val adapter = ArrayAdapter(view.context,android.R.layout.simple_list_item_1, user_name_list)
         list_view?.adapter = adapter
         list_view.onItemClickListener = object : AdapterView.OnItemClickListener {
 
@@ -44,4 +44,5 @@ class NameList : Fragment() {
             }
         }
     }
+
 }
