@@ -7,9 +7,10 @@
         android:padding="8dp"
         android:theme="@style/AppTheme"
         tools:context=".activity.ViewUserDetail">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/text_view_result"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"/>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/fragment_holder" tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="8dp">
+
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
