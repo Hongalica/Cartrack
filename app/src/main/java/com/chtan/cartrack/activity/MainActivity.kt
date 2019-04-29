@@ -58,9 +58,5 @@ class MainActivity : Activity() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
-
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected
-    }
+    
 }
