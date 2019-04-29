@@ -37,30 +37,28 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context,
         onCreate(db)
     }
 
-    //method to insert data
+    //method to add user data
     fun addUser(user: UserModelClass):Long{
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(KEY_USERNAME, user.userName) // EmpModelClass Name
-        contentValues.put(KEY_PASSWORD,user.userPassword ) // EmpModelClass Phone
-        contentValues.put(KEY_COUNTRY,user.userCountry ) // EmpModelClass Phone
+        val content_values = ContentValues()
+        content_values.put(KEY_USERNAME, user.userName) // userModelClass user name
+        content_values.put(KEY_PASSWORD,user.userPassword ) // userModelClass user password
+        content_values.put(KEY_COUNTRY,user.userCountry ) // userModelClass user country
         // Inserting Row
-        val success = db.insert(TABLE_LOGIN, null, contentValues)
-        //2nd argument is String containing nullColumnHack
+        val success = db.insert(TABLE_LOGIN, null, content_values)
         db.close() // Closing database connection
         return success
     }
 
     fun checkUserInfo(user: UserModelClass):Boolean{
-        val Log = Logger.getLogger(MainActivity::class.java.name)
-        val selectQuery = "SELECT  * FROM $TABLE_LOGIN"
+        val select_query = "SELECT  * FROM $TABLE_LOGIN"
         var result = false
         val db = this.readableDatabase
         var cursor: Cursor? = null
         try{
-            cursor = db.rawQuery(selectQuery, null)
+            cursor = db.rawQuery(select_query, null)
         }catch (e: SQLiteException) {
-            db.execSQL(selectQuery)
+            db.execSQL(select_query)
             return result
         }
 
