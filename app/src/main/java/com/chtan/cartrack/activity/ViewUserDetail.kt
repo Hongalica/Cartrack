@@ -67,7 +67,7 @@ class ViewUserDetail: FragmentActivity() {
         val transaction = manager.beginTransaction()
         val fragment = NameList()
         transaction.replace(R.id.fragment_holder, fragment, "theNamelist")
-        transaction.addToBackStack( null)
+        transaction.addToBackStack("")
         transaction.commit()
     }
 
@@ -75,13 +75,22 @@ class ViewUserDetail: FragmentActivity() {
         val transaction = manager.beginTransaction()
         val fragment = MasterDetail()
         transaction.replace(R.id.fragment_holder, fragment, "theMasterDetail")
-        transaction.addToBackStack(null)
+        transaction.addToBackStack("")
         transaction.commit()
     }
 
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected
+    }
+
+    override fun onBackPressed() {
+        Log.d("let check it", ""+manager.backStackEntryCount)
+        if (manager.backStackEntryCount >1) {
+            manager.popBackStackImmediate();
+        } else {
+            finish()
+        }
     }
 }
 

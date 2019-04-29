@@ -42,6 +42,7 @@ class MainActivity : Activity() {
             Toast.makeText(applicationContext,"Login Successful", Toast.LENGTH_LONG).show()
             val intent = Intent(this, ViewUserDetail::class.java)
             startActivity(intent)
+            finishAffinity()
         }
         else
         {
@@ -58,5 +59,5 @@ class MainActivity : Activity() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
-    
+
 }
