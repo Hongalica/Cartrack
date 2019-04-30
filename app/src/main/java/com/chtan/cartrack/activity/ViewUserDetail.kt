@@ -2,10 +2,12 @@ package com.chtan.cartrack.activity
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.FragmentActivity
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -29,13 +31,7 @@ class ViewUserDetail: FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_user_detail)
-        if (isNetworkAvailable(this)==true) {
-            queryMasterDetail()
-        }
-        else
-        {
-
-        }
+        checkNetworkConnection(this)
     }
 
     fun queryMasterDetail() {
@@ -79,9 +75,33 @@ class ViewUserDetail: FragmentActivity() {
         transaction.commit()
     }
 
-    fun isNetworkAvailable(context: Context): Boolean {
+    fun checkNetworkConnection(context: Context) {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected
+        if (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo.isConnected)
+        {
+            queryMasterDetail()
+        }
+        else
+        {
+            val no_internet_dialog = AlertDialog.Builder(context)
+            no_internet_dialog.setMessage("No internet connection")
+                // if the dialog is cancelable
+                .setCancelable(false)
+                // positive button text and action
+                .setPositiveButton("Retry", DialogInterface.OnClickListener {
+                        dialog, id ->isNetworkAvailable(context)
+                })
+                // negative button text and action
+                .setNegativeButton("Exit", DialogInterface.OnClickListener {
+                        dialog, id -> finish()
+                })
+            // create dialog box
+            val alert = no_internet_dialog.create()
+            // set title for alert dialog box
+            alert.setTitle("Connection Error")
+            // show alert dialog
+            alert.show()
+        }
     }
 
     override fun onBackPressed() {
