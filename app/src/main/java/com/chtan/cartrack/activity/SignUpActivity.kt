@@ -55,13 +55,26 @@ class SignUpActivity : Activity() {
         val password = findViewById<EditText>(R.id.signup_password_input).text
         val confirm_password = findViewById<EditText>(R.id.confirm_password_input).text
         val country = findViewById<Spinner>(R.id.signup_country_list)
-        if(user_name.trim().length < 3
-            ||password.trim().length<8
-            || !password.toString().trim().equals(confirm_password.toString().trim())
+
+        val user_name_length_check = (user_name.trim().length < 3)
+        val user_name_check = DatabaseHandler(this).checkUsername(user_name.toString())
+        val password_length_check = password.trim().length<8
+        val password_confirm_check = password.toString().trim().equals(confirm_password.toString().trim())
+        if(user_name_length_check
+            ||password_length_check
+            || !password_confirm_check
+            || !user_name_check
         )
         {
-            //Signup failed reset all field
-            Toast.makeText(applicationContext,"Sign Up Failed", Toast.LENGTH_LONG).show()
+            if (!user_name_check)
+            {
+                Toast.makeText(applicationContext,"Username Used", Toast.LENGTH_LONG).show()
+            }
+            else
+            {
+                //Signup failed reset all field
+                Toast.makeText(applicationContext,"Sign Up Failed", Toast.LENGTH_LONG).show()
+            }
             user_name.clear()
             password.clear()
             confirm_password.clear()
