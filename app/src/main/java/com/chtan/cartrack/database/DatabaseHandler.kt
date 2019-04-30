@@ -47,6 +47,7 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context,
         // Inserting Row
         val success = db.insert(TABLE_LOGIN, null, content_values)
         db.close() // Closing database connection
+
         return success
     }
 
@@ -74,6 +75,34 @@ class DatabaseHandler(context: Context) : SQLiteOpenHelper(context,
                 if(userName.equals(user.userName) and userPassword.equals(user.userPassword) and userCountry.equals(user.userCountry))
                 {
                     result = true
+                    break
+                }
+
+            }while(cursor.moveToNext())
+        }
+        return result
+    }
+
+    fun checkUsername(user: String):Boolean{
+        val select_query = "SELECT  * FROM $TABLE_LOGIN"
+        var result = true
+        val db = this.readableDatabase
+        var cursor: Cursor? = null
+        try{
+            cursor = db.rawQuery(select_query, null)
+        }catch (e: SQLiteException) {
+            db.execSQL(select_query)
+            return result
+        }
+
+        var userName: String
+        if(cursor.moveToFirst())
+        {
+            do {
+                userName = cursor.getString(cursor.getColumnIndex(KEY_USERNAME))
+                if(userName.equals(user))
+                {
+                    result = false
                     break
                 }
 
