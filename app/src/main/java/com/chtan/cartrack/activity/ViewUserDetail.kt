@@ -89,7 +89,7 @@ class ViewUserDetail: FragmentActivity() {
                 .setCancelable(false)
                 // positive button text and action
                 .setPositiveButton("Retry", DialogInterface.OnClickListener {
-                        dialog, id ->isNetworkAvailable(context)
+                        dialog, id ->checkNetworkConnection(context)
                 })
                 // negative button text and action
                 .setNegativeButton("Exit", DialogInterface.OnClickListener {
